@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version: 5.5.47)
-# Date: 2016-12-16 11:57:47
+# Date: 2016-12-22 00:10:02
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -21,8 +21,52 @@ CREATE TABLE `tb_cookie` (
 #
 
 /*!40000 ALTER TABLE `tb_cookie` DISABLE KEYS */;
-INSERT INTO `tb_cookie` VALUES (1143910315,'2C2FDC00555E0372C46AC73E5111AC3E',1481860131213);
+INSERT INTO `tb_cookie` VALUES (2,'5E3B7B157ADAE6A58A28DC8AFF5AD06F',1482201304364),(1000,'A9C91CB694451464E3FB2AD3E9F8F9D2',1482308187104),(1001,'C4046D5129458BAD7E8421F4AFAEE501',1482330024312),(1143910315,'AFD603798855993F1E3C4005B9D43D38',1482330151227);
 /*!40000 ALTER TABLE `tb_cookie` ENABLE KEYS */;
+
+#
+# Structure for table "tb_course"
+#
+
+DROP TABLE IF EXISTS `tb_course`;
+CREATE TABLE `tb_course` (
+  `no` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(8) NOT NULL DEFAULT '',
+  `scoremax` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`no`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+#
+# Data for table "tb_course"
+#
+
+/*!40000 ALTER TABLE `tb_course` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_course` ENABLE KEYS */;
+
+#
+# Structure for table "tb_student"
+#
+
+DROP TABLE IF EXISTS `tb_student`;
+CREATE TABLE `tb_student` (
+  `no` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(8) NOT NULL DEFAULT '',
+  `sex` varchar(1) NOT NULL DEFAULT '女',
+  `birthday` date DEFAULT NULL,
+  `studyday` date NOT NULL DEFAULT '0000-00-00',
+  `class` varchar(8) NOT NULL DEFAULT '',
+  `pface` varchar(8) DEFAULT NULL,
+  `origin` varchar(8) DEFAULT NULL,
+  PRIMARY KEY (`no`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+#
+# Data for table "tb_student"
+#
+
+/*!40000 ALTER TABLE `tb_student` DISABLE KEYS */;
+INSERT INTO `tb_student` VALUES (1000,'姓名','男','1998-02-28','2015-09-12','15软件一班','党员','广东汕尾'),(1001,'学生','男','1996-01-18','2016-05-06','16软件怪班','zzm','jg'),(1002,'','女',NULL,'0000-00-00','',NULL,NULL),(1003,'','女',NULL,'0000-00-00','',NULL,NULL),(1004,'刘六郡','女',NULL,'0000-00-00','',NULL,NULL),(1005,'','女',NULL,'0000-00-00','',NULL,NULL),(1006,'刘绍钧','男',NULL,'0000-00-00','',NULL,NULL),(1007,'刘惜君','女',NULL,'0000-00-00','',NULL,NULL),(1008,'刘利军','女',NULL,'0000-00-00','',NULL,NULL),(1009,'','女',NULL,'0000-00-00','',NULL,NULL);
+/*!40000 ALTER TABLE `tb_student` ENABLE KEYS */;
 
 #
 # Structure for table "tb_teacher"
@@ -30,15 +74,15 @@ INSERT INTO `tb_cookie` VALUES (1143910315,'2C2FDC00555E0372C46AC73E5111AC3E',14
 
 DROP TABLE IF EXISTS `tb_teacher`;
 CREATE TABLE `tb_teacher` (
-  `tno` int(11) NOT NULL DEFAULT '0',
-  `tname` varchar(8) NOT NULL DEFAULT '',
-  `sex` varchar(8) NOT NULL DEFAULT '',
+  `no` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(8) NOT NULL DEFAULT '',
+  `sex` varchar(1) NOT NULL DEFAULT '女',
   `birthday` date DEFAULT NULL,
-  `workday` date NOT NULL DEFAULT '0001-01-02',
+  `workday` date NOT NULL DEFAULT '0000-00-00',
   `position` varchar(8) NOT NULL DEFAULT '',
   `pface` varchar(8) DEFAULT NULL,
   `origin` varchar(8) DEFAULT NULL,
-  PRIMARY KEY (`tno`)
+  PRIMARY KEY (`no`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 #
@@ -46,7 +90,7 @@ CREATE TABLE `tb_teacher` (
 #
 
 /*!40000 ALTER TABLE `tb_teacher` DISABLE KEYS */;
-INSERT INTO `tb_teacher` VALUES (1,'','',NULL,'0001-01-02','',NULL,NULL),(6,'','',NULL,'0001-01-02','',NULL,NULL),(42,'','',NULL,'0001-01-02','',NULL,NULL),(44,'','',NULL,'0001-01-02','',NULL,NULL),(79,'','',NULL,'0001-01-02','',NULL,NULL),(102,'','',NULL,'0001-01-02','',NULL,NULL),(111,'','',NULL,'0001-01-02','',NULL,NULL),(123,'','',NULL,'0001-01-02','',NULL,NULL),(126,'','',NULL,'0001-01-02','',NULL,NULL),(213,'','',NULL,'0001-01-02','',NULL,NULL),(226,'','',NULL,'0001-01-02','',NULL,NULL),(420,'','',NULL,'0001-01-02','',NULL,NULL),(445,'','',NULL,'0001-01-02','',NULL,NULL),(456,'','',NULL,'0001-01-02','',NULL,NULL),(666,'','',NULL,'0001-01-02','',NULL,NULL),(674,'','',NULL,'0001-01-02','',NULL,NULL),(779,'','',NULL,'0001-01-02','',NULL,NULL),(789,'','',NULL,'0001-01-02','',NULL,NULL),(1205,'','',NULL,'0001-01-02','',NULL,NULL),(1233,'','',NULL,'0001-01-02','',NULL,NULL),(4046,'','',NULL,'0001-01-02','',NULL,NULL),(4065,'','',NULL,'0001-01-02','',NULL,NULL),(4211,'','',NULL,'0001-01-02','',NULL,NULL),(4578,'','',NULL,'0001-01-02','',NULL,NULL),(7852,'','',NULL,'0001-01-02','',NULL,NULL),(7891,'','',NULL,'0001-01-02','',NULL,NULL),(7896,'','',NULL,'0001-01-02','',NULL,NULL),(7897,'','',NULL,'0001-01-02','',NULL,NULL),(42030,'','',NULL,'0001-01-02','',NULL,NULL),(45689,'','',NULL,'0001-01-02','',NULL,NULL),(52336,'p','p','2009-09-08','2009-09-09','p','p','p'),(123231,'','',NULL,'0001-01-02','',NULL,NULL),(301564,'','',NULL,'0001-01-02','',NULL,NULL),(456456,'','',NULL,'0001-01-02','',NULL,NULL),(1111111,'p','p','2009-09-09','2009-09-09','p','p','p'),(9654412,'p','p','2009-09-09','2009-09-09','p','p','p');
+INSERT INTO `tb_teacher` VALUES (2,'','女',NULL,'0000-00-00','',NULL,NULL),(3,'','女',NULL,'0000-00-00','',NULL,NULL),(4,'','女',NULL,'0000-00-00','',NULL,NULL),(5,'','女',NULL,'0000-00-00','',NULL,NULL),(6,'','女',NULL,'0000-00-00','',NULL,NULL),(7,'','女',NULL,'0000-00-00','',NULL,NULL),(8,'','女',NULL,'0000-00-00','',NULL,NULL),(9,'the tea','女',NULL,'0000-00-00','',NULL,NULL),(10,'t','女',NULL,'0000-00-00','',NULL,NULL),(100,'','女',NULL,'0000-00-00','',NULL,NULL);
 /*!40000 ALTER TABLE `tb_teacher` ENABLE KEYS */;
 
 #
@@ -67,5 +111,5 @@ CREATE TABLE `tb_user` (
 #
 
 /*!40000 ALTER TABLE `tb_user` DISABLE KEYS */;
-INSERT INTO `tb_user` VALUES (1143910315,'1143910315',0);
+INSERT INTO `tb_user` VALUES (2,'2',1),(3,'3',1),(4,'4',1),(5,'5',1),(6,'6',1),(7,'7',1),(8,'8',1),(9,'9',1),(10,'10',1),(100,'100',1),(1000,'1000',2),(1001,'1001',2),(1002,'1002',2),(1003,'1003',2),(1004,'1004',2),(1005,'1005',2),(1006,'1006',2),(1007,'1007',2),(1008,'1008',2),(1009,'1009',2),(1143910315,'1143910315',0);
 /*!40000 ALTER TABLE `tb_user` ENABLE KEYS */;
