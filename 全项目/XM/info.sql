@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version: 5.5.47)
-# Date: 2016-12-23 10:57:03
+# Date: 2016-12-23 13:48:40
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -13,14 +13,12 @@ CREATE TABLE `tb_class` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `class` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # Data for table "tb_class"
 #
 
-/*!40000 ALTER TABLE `tb_class` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tb_class` ENABLE KEYS */;
 
 #
 # Structure for table "tb_cookie"
@@ -32,14 +30,12 @@ CREATE TABLE `tb_cookie` (
   `cookie` varchar(32) NOT NULL DEFAULT '',
   `time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # Data for table "tb_cookie"
 #
 
-/*!40000 ALTER TABLE `tb_cookie` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tb_cookie` ENABLE KEYS */;
 
 #
 # Structure for table "tb_course"
@@ -60,14 +56,12 @@ CREATE TABLE `tb_course` (
   `chemistry` smallint(5) unsigned NOT NULL DEFAULT '0',
   `biology` smallint(5) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # Data for table "tb_course"
 #
 
-/*!40000 ALTER TABLE `tb_course` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tb_course` ENABLE KEYS */;
 
 #
 # Structure for table "tb_exam"
@@ -78,14 +72,12 @@ CREATE TABLE `tb_exam` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # Data for table "tb_exam"
 #
 
-/*!40000 ALTER TABLE `tb_exam` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tb_exam` ENABLE KEYS */;
 
 #
 # Structure for table "tb_student"
@@ -102,14 +94,12 @@ CREATE TABLE `tb_student` (
   `pface` varchar(8) DEFAULT NULL,
   `origin` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`no`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 #
 # Data for table "tb_student"
 #
 
-/*!40000 ALTER TABLE `tb_student` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tb_student` ENABLE KEYS */;
 
 #
 # Structure for table "tb_teacher"
@@ -127,14 +117,12 @@ CREATE TABLE `tb_teacher` (
   `pface` varchar(8) DEFAULT NULL,
   `origin` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`no`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # Data for table "tb_teacher"
 #
 
-/*!40000 ALTER TABLE `tb_teacher` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tb_teacher` ENABLE KEYS */;
 
 #
 # Structure for table "tb_user"
@@ -146,12 +134,10 @@ CREATE TABLE `tb_user` (
   `password` varchar(20) NOT NULL DEFAULT '123456',
   `id` int(11) NOT NULL DEFAULT '2',
   PRIMARY KEY (`user`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # Data for table "tb_user"
 #
 
-/*!40000 ALTER TABLE `tb_user` DISABLE KEYS */;
 INSERT INTO `tb_user` VALUES (1143910315,'1143910315',0);
-/*!40000 ALTER TABLE `tb_user` ENABLE KEYS */;

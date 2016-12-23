@@ -51,3 +51,14 @@ try{
 	alert("请先登录！");
 	window.location.href = "LoginFrom.jsp";
 </script>
+<%--
+---------------JSP笔记-scope范围-----------
+Page范围：属性只在当前页有效，如果跳转到其他页面，则需要重新实例化
+	使用与：Jsp页面操作资源时使用
+Request范围：属性只保存在一次服务器跳转中
+	前提：使用<jsp:forward>跳转才行
+Session范围:属性值保存在一次会话中，可以使用任意方式连接其他页面，则此对象值实例化一次
+	适用于：适用JSP直接开发购物车
+Application范围：属性公有，此对象在整个服务器只实例化一次
+	尽量少用，因为application会重用资源
+	--%>
