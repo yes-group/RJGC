@@ -1,6 +1,6 @@
-﻿# Host: localhost  (Version: 5.5.47)
-# Date: 2016-12-23 13:48:40
-# Generator: MySQL-Front 5.3  (Build 4.234)
+﻿# Host: localhost  (Version 5.6.24)
+# Date: 2016-12-23 17:49:09
+# Generator: MySQL-Front 5.4  (Build 4.50) - http://www.mysqlfront.de/
 
 /*!40101 SET NAMES utf8 */;
 
@@ -36,6 +36,7 @@ CREATE TABLE `tb_cookie` (
 # Data for table "tb_cookie"
 #
 
+INSERT INTO `tb_cookie` VALUES (1143910315,'E887FF1B91BE2C378C91B899C90C0E63',1482485161225);
 
 #
 # Structure for table "tb_course"
