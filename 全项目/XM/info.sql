@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version: 5.5.47)
-# Date: 2016-12-23 10:52:31
+# Date: 2016-12-23 10:57:03
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -47,6 +47,7 @@ CREATE TABLE `tb_cookie` (
 
 DROP TABLE IF EXISTS `tb_course`;
 CREATE TABLE `tb_course` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `no` int(11) NOT NULL DEFAULT '0',
   `exam` int(11) NOT NULL DEFAULT '0',
   `chinese` smallint(6) unsigned NOT NULL DEFAULT '0',
@@ -58,7 +59,7 @@ CREATE TABLE `tb_course` (
   `physics` smallint(5) unsigned NOT NULL DEFAULT '0',
   `chemistry` smallint(5) unsigned NOT NULL DEFAULT '0',
   `biology` smallint(5) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`no`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 #
