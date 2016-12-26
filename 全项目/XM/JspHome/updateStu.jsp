@@ -1,66 +1,57 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="jdbc.Jdbc"%>
-<jsp:useBean id="hh" class="jdbc.Jdbc" scope="page"></jsp:useBean>
+<%@ page import="db.Condb"%>
+<jsp:useBean id="db" class="db.Condb" scope="page"></jsp:useBean>
 <%
-	if(request.getMethod().equals("POST")){
-String tno = request.getParameter("no");
-String index = request.getParameter("index");
-String data = request.getParameter("data");
-try{
-Cookie cookies[]=request.getCookies();
-Cookie sCookie=null;
-int no=Integer.parseInt(tno);
-int ind=Integer.parseInt(index);
-if (ind==2) {
-    if ((data.equals("男")||data.equals("女"))==false) {%>{"code":"5"}<%
-        return;
-    }
-}
-String lie="";
-switch (ind) {
-	case 1:
-	lie="name";
-	break;
-	case 2:
-	lie="sex";
-	break;
-	case 3:
-	lie="birthday";
-	break;
-	case 4:
-	lie="studyday";
-	break;
-	case 5:
-	lie="class";
-	break;
-	case 6:
-	lie="pface";
-	break;
-	case 7:
-	lie="origin";
-	break;
-	default:%>{"msg":"出错！","code":"1"}<%
-	return;
-}
-for(int i=0;i<cookies.length;i++){
-	sCookie=cookies[i];
-	if(sCookie!=null){
-		if(("cookie").equals(sCookie.getName())){
-			if(hh.cheakcookie(sCookie.getValue(),0,no)){
-				if(hh.update("tb_student",lie,data,"no="+no)){%>{"code":"0"}<%
-				}else{%>{"tno":"<%=tno%>","index":"<%=index%>","data":"<%=data%>","code":"5"}<%
+if(request.getMethod().equals("POST")){
+	try{
+		String sno = request.getParameter("no");
+		String index = request.getParameter("index");
+		String data = request.getParameter("data");
+		int no=Integer.parseInt(sno);
+		int ind=Integer.parseInt(index);
+		Cookie cookies[]=request.getCookies();
+		for(Cookie sCookie:cookies){
+			if(sCookie!=null){
+				if(("cookie").equals(sCookie.getName())){
+					if(db.initialize()&&db.cheakislogin(sCookie.getValue())){
+						if (db.cookieid()==0){
+							if (db.inchange(ind, data, no, -2)){
+								if (db.finish()){
+									%>{"code":"0"}<%
+						    	}else{
+									%>{"no":"<%=sno%>","index":"<%=index%>","data":"<%=data%>","code":"5"}<%
+								}
+							}else{
+								%>{"no":"<%=sno%>","index":"<%=index%>","data":"<%=data%>","code":"5"}<%
+							}
+						}else if(db.cookieid()==2){
+							if(db.cookieuser()==no){
+								if (db.inchange(ind, data, no, -2)){
+									if (db.finish()){
+										%>{"code":"0"}<%
+						    		}else{
+										%>{"no":"<%=sno%>","index":"<%=index%>","data":"<%=data%>","code":"5"}<%
+									}
+								}else{
+									%>{"no":"<%=sno%>","index":"<%=index%>","data":"<%=data%>","code":"5"}<%
+								}
+							}else{
+								%>{"msg":"没有权限！","code":"1"}<%
+							}
+						}else{
+							%>{"msg":"没有权限！","code":"1"}<%
+						}
+					}
+					return;
 				}
-				return;
 			}
 		}
+		%>{"msg":"LoginFrom.jsp","code":"3"}<%
+	}catch(Exception e){
+		%>{"msg":"数据出错！","code":"1"}<%
+		System.out.println(e.getMessage());
 	}
+}else{
+	%><script>alert("请先登录！");window.location.href = "LoginFrom.jsp";</script><%
 }
-%>{"msg":"没有权限！","code":"1"}<%
-}catch(Exception e){%>{"no":"<%=tno%>","index":"<%=index%>","data":"<%=data%>","code":"5"}<%
-	System.out.println(e.getMessage());
-}return;
-}%>
-<script>
-	alert("请先登录！");
-	window.location.href = "LoginFrom.jsp";
-</script>
+%>

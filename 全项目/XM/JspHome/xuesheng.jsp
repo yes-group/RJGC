@@ -1,15 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="jdbc.Jdbc"%>
-<jsp:useBean id="hh" class="jdbc.Jdbc" scope="page"></jsp:useBean>
+<%@ page import="db.Condb"%>
+<jsp:useBean id="db" class="db.Condb" scope="page"></jsp:useBean>
 <%
 Cookie cookies[]=request.getCookies();
 if (cookies!=null) {
-	Cookie sCookie=null;
-	for(int i=0;i<cookies.length;i++){
-		sCookie=cookies[i];
+	for(Cookie sCookie:cookies){
 		if(sCookie!=null){
 			if(("cookie").equals(sCookie.getName())){
-				if(hh.cheakcookie(sCookie.getValue(),2)){%><!DOCTYPE html>
+				if(db.initialize()&&db.cheakislogin(sCookie.getValue())&&db.cookieid()==2){
+%><!DOCTYPE >
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
@@ -46,7 +45,7 @@ if (cookies!=null) {
 		</div>
 		<a id="logout" class="pull-right">退出系统</a>
 		<div>
-			同学，<%=hh.getcookieuser(sCookie.getValue())%>
+			同学，<strong id="user"><%=db.cookieuser()%></strong>
 		</div>
 		<ul id="myTab" class="nav nav-tabs">
 			<li class="active">

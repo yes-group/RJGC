@@ -1,15 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="jdbc.Jdbc"%>
-<jsp:useBean id="hh" class="jdbc.Jdbc" scope="page"></jsp:useBean>
+<%@ page import="db.Condb"%>
+<jsp:useBean id="db" class="db.Condb" scope="page"></jsp:useBean>
 <%
 Cookie cookies[]=request.getCookies();
 if (cookies!=null) {
-	Cookie sCookie=null;
-	for(int i=0;i<cookies.length;i++){
-		sCookie=cookies[i];
+	for(Cookie sCookie:cookies){
 		if(sCookie!=null){
 			if(("cookie").equals(sCookie.getName())){
-				if(hh.cheakcookie(sCookie.getValue(),0)){%><!DOCTYPE >
+				if(db.initialize()&&db.cheakislogin(sCookie.getValue())&&db.cookieid()==0){
+%><!DOCTYPE >
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
@@ -22,8 +21,7 @@ if (cookies!=null) {
 			<div>
 				<a id="logout" class="fr">退出系统</a>
 				<div>
-					管理员：
-					<%=hh.getcookieuser(sCookie.getValue())%>
+					管理员：<strong id="user"><%=db.cookieuser()%></strong>
 				</div>
 			</div>
 			<img style="position: absolute;" src="img/guanliwelcome.jpg" />
@@ -54,26 +52,23 @@ if (cookies!=null) {
 						<col class="colw" width="12%">
 						<col class="colw" width="12%">
 						<col class="colw" width="12%">
-						<col class="colw" width="12%">
 						<col>
 					</colgroup>
 					<tbody>
 						<tr>
-							<td id="d0">工号</td>
-							<td id="d1">姓名</td>
-							<td id="d2">性别</td>
-							<td id="d3">生日</td>
-							<td id="d4">入职日期</td>
-							<td id="d5">职务</td>
-							<td id="d6">政治面貌</td>
-							<td id="d7">籍贯</td>
+							<td class="d0">工号</td>
+							<td class="d1">姓名</td>
+							<td class="d2">性别</td>
+							<td class="d3">生日</td>
+							<td class="d4">入职日期</td>
+							<td class="d5">政治面貌</td>
+							<td class="d6">籍贯</td>
 						</tr>
 					</tbody>
 				</table>
 				<div class="gundong">
 					<table width="100%" border="1" cellspacing="0" cellpadding="0">
 						<colgroup>
-							<col class="colw" width="12%">
 							<col class="colw" width="12%">
 							<col class="colw" width="12%">
 							<col class="colw" width="12%">
@@ -114,38 +109,38 @@ if (cookies!=null) {
 						学生信息表
 					</caption>
 					<colgroup>
-						<col class="colw" width="100px">
-						<col class="colw" width="100px">
-						<col class="colw" width="100px">
-						<col class="colw" width="100px">
-						<col class="colw" width="100px">
-						<col class="colw" width="100px">
-						<col class="colw" width="100px">
+						<col class="colwe" width="100px">
+						<col class="colwe" width="100px">
+						<col class="colwe" width="100px">
+						<col class="colwe" width="100px">
+						<col class="colwe" width="100px">
+						<col class="colwe" width="100px">
+						<col class="colwe" width="100px">
 						<col>
 					</colgroup>
 					<tbody>
 						<tr>
-							<td>学号</td>
-							<td>姓名</td>
-							<td>性别</td>
-							<td>生日</td>
-							<td>入学日期</td>
-							<td>班级</td>
-							<td>政治面貌</td>
-							<td>籍贯</td>
+							<td class="d0">学号</td>
+							<td class="d1">姓名</td>
+							<td class="d2">性别</td>
+							<td class="d3">生日</td>
+							<td class="d4">入学日期</td>
+							<td class="d5">班级</td>
+							<td class="d6">政治面貌</td>
+							<td class="d7">籍贯</td>
 						</tr>
 					</tbody>
 				</table>
 				<div class="gundong">
 					<table width="100%" border="1" cellspacing="0" cellpadding="0">
 						<colgroup>
-							<col class="colw" width="100px">
-							<col class="colw" width="100px">
-							<col class="colw" width="100px">
-							<col class="colw" width="100px">
-							<col class="colw" width="100px">
-							<col class="colw" width="100px">
-							<col class="colw" width="100px">
+							<col class="colwe" width="100px">
+							<col class="colwe" width="100px">
+							<col class="colwe" width="100px">
+							<col class="colwe" width="100px">
+							<col class="colwe" width="100px">
+							<col class="colwe" width="100px">
+							<col class="colwe" width="100px">
 							<col>
 						</colgroup>
 						<tbody class="dataview">

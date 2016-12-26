@@ -251,11 +251,9 @@ $("#logout").click(function() {
 	$.ajax({
 		type: "POST",
 		url: "logout.jsp",
-		data: {
-			"no": no
-		},
 		success: function(data) {
 			if(msgcheak(data)==false) {
+				alert("登出失败！请稍后重试！");
 			}
 		},
 		error: function(data) {

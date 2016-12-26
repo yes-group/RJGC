@@ -3,7 +3,8 @@ $(window).resize(function() {
 });
 
 function tableresize() {
-	$(".colw").attr("width", Math.ceil($(".active .bk")[0].offsetWidth / 8) + "px");
+	$(".colw").attr("width", Math.ceil($(".active .bk")[0].offsetWidth / 7) + "px");
+	$(".colwe").attr("width", Math.ceil($(".active .bk")[0].offsetWidth / 8) + "px");
 }
 tableresize();
 $(".js")[0].hdata = false; //初始没有数据
@@ -139,7 +140,7 @@ function waitsuccess(target) {
 			if(ans == "1") {
 				target[0].udatetimes = 0;
 				for(var i = 0; i < er.length; i++) {
-					ans = prompt("出错的教师编号：" + er[i].no + "\n出错的列：" + $("#d" + er[i].index).text() + "\n出错的数据：" + er[i].data + "\n点击确定重新提交，点击取消保留原值。", er[i].data);
+					ans = prompt("出错的编号：" + er[i].no + "\n出错的列：" + target.find(".d" + er[i].index).text() + "\n出错的数据：" + er[i].data + "\n点击确定重新提交，点击取消保留原值。", er[i].data);
 					if(ans!=null) {
 						target[0].udatetimes++;
 						change(er[i].no, er[i].index, ans,target);
@@ -265,11 +266,9 @@ $("#logout").click(function() {
 	$.ajax({
 		type: "POST",
 		url: "logout.jsp",
-		data: {
-			"no": no
-		},
 		success: function(data) {
 			if(msgcheak(data)==false) {
+				alert("登出失败！请稍后重试！");
 			}
 		},
 		error: function(data) {

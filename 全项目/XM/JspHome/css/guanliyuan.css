@@ -103,3 +103,9 @@ body {
 	position: absolute;
 	background-color: #0000FF;
 }
+#logout{
+	color: #428bca;
+}
+#logout:hover{
+	text-decoration: underline;
+}
