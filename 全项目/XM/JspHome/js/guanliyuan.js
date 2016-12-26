@@ -213,6 +213,10 @@ $(".add").click(function() {
 	var add = $(this);
 	var target = add.parents(".xx");
 	var no=target.find(".gh").val();
+	if(no>2147483647){
+		alert("不能超过2147483647！");
+		return;
+	}
 	var targeturl="insertTea.jsp";
 	if (target[0]==$(".xs")[0]) {
 		targeturl="insertStu.jsp";

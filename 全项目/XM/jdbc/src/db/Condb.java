@@ -1,14 +1,17 @@
 package db;
+
 import java.security.MessageDigest;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
 public class Condb {
 	private final String		db_url	= "jdbc:mysql://localhost:3306/info";	// 连接数据库字符串
 	private final String		db_user	= "root";								// 数据库用户名
@@ -17,15 +20,23 @@ public class Condb {
 	private int					user	= -1;
 	private Connection			conn;
 	private PreparedStatement	pstmt;
+	
 	public static void main(String[] args) {
 		// 这里是测试内容
-		Condb name = new Condb();
-		name.initialize();
-		name.cheakislogin("6FBBE2F0103204F68E000BC8E14FEAED");
+		// 防止单引号出错
+		// System.out.println(new String("'").replaceAll("'", "''"));
+		// 创建连接数据库实例
+		// Condb name = new Condb();
+		// 实例初始化
+		// name.initialize();
+		// name.cheakislogin("6FBBE2F0103204F68E000BC8E14FEAED");
 		// System.out.println(name.inchange(5,"高一（1）班", 600000001, -2));
-		 System.out.println(name.inquery(-3));
+		// System.out.println(name.inquery(-3));
+		// 完成操作
 		// name.finish();
+		// name.close();
 	}
+	
 	public boolean initialize() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -35,48 +46,62 @@ public class Condb {
 			return true;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			return false;
 		}
+		return false;
 	}
+	
 	public boolean finish() {
 		try {
 			conn.commit();
 			return true;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			return false;
+		}
+		return false;
+	}
+
+	public void close() {
+		try {
+			pstmt.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		} finally {
 			try {
-				pstmt.close();
 				conn.close();
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
+			pstmt = null;
+			conn = null;
 		}
 	}
+	
 	public String login(int user, String password, int id) {
 		String result = null;
 		try {
 			ArrayList<String> arrayList = new ArrayList<String>();
-			if (Query("select id from tb_user where user=" + user + " and password=\"" + password + "\"", arrayList) && arrayList.size() == 1 && Integer.valueOf(arrayList.get(0)) == id) {
+			if (Query("select id from tb_user where user=" + user + " and password='" + password.replaceAll("'", "''") + "'", arrayList) && arrayList.size() == 1 && Integer.valueOf(arrayList.get(0)) == id) {
 				result = makecookie(user);
-				this.user=user;
-				this.id=id;
+				this.user = user;
+				this.id = id;
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return result;
 	}
+	
 	public boolean logout() {
 		try {
-			if (Query("delete from tb_cookie where user=" + user)==1) {
+			if (Query("delete from tb_cookie where user=" + user) == 1) {
 				return true;
 			}
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 		return false;
 	}
+	
 	private String makecookie(int user) {
 		String md5 = null;
 		try {
@@ -87,21 +112,21 @@ public class Condb {
 			short i = 0;
 			do {
 				if (i++ == 7) {
-					temp=null;
+					temp = null;
 					break;
 				}
-				temp = enMD5(String.valueOf(user+time++));
-				success = Query("select user from tb_cookie where cookie=\"" + temp + "\"", arrayList);
+				temp = enMD5(String.valueOf(user + time++));
+				success = Query("select user from tb_cookie where cookie='" + temp.replaceAll("'", "''") + "'", arrayList);
 			} while (success == false || arrayList.size() != 0);
 			if (temp != null) {
 				if (Query("select count(*) from tb_cookie where user=" + user, arrayList) && arrayList.size() == 1) {
 					int count = Integer.valueOf(arrayList.get(0));
 					if (count == 0) {
-						if (Query("insert into tb_cookie (user,cookie,time) values (" + user + ",\"" + temp + "\"," + time + ")") == 1) {
+						if (Query("insert into tb_cookie (user,cookie,time) values (" + user + ",'" + temp.replaceAll("'", "''") + "'," + time + ")") == 1) {
 							md5 = temp;
 						}
 					} else {
-						if (Query("update tb_cookie set cookie =\"" + temp + "\", time = " + time + " where user =" + user) == 1) {
+						if (Query("update tb_cookie set cookie ='" + temp.replaceAll("'", "''") + "', time = " + time + " where user =" + user) == 1) {
 							md5 = temp;
 						}
 					}
@@ -112,6 +137,7 @@ public class Condb {
 		}
 		return md5;
 	}
+	
 	public String inquery(int target) {
 		try {
 			ArrayList<String> list = new ArrayList<String>();
@@ -126,13 +152,13 @@ public class Condb {
 					columns = 8;
 					sql = "select sno,sname,sex,birthday,studyday,class,pface,origin from tb_student,tb_class where id=sclass";
 					break;
-				default:				
+				default:
 					if (id == 1) {
 						columns = 7;
-						sql = "select tno,tname,sex,birthday,workday,pface,origin from tb_teacher where tno="+user;
+						sql = "select tno,tname,sex,birthday,workday,pface,origin from tb_teacher where tno=" + user;
 					} else {
 						columns = 8;
-						sql = "select sno,sname,sex,birthday,studyday,class,pface,origin from tb_student,tb_class where id=sclass and sno="+user;
+						sql = "select sno,sname,sex,birthday,studyday,class,pface,origin from tb_student,tb_class where id=sclass and sno=" + user;
 					}
 					break;
 			}
@@ -160,35 +186,36 @@ public class Condb {
 		}
 		return null;
 	}
-	public boolean add(int no,int id) {
+	
+	public boolean add(int no, int id) {
 		try {
-			String table="";
-			String field="";
+			String table = "";
+			String field = "";
 			switch (id) {
 				case 1:
-					table="tb_teacher";
-					field="tno";
+					table = "tb_teacher";
+					field = "tno";
 					break;
 				case 2:
-					table="tb_student";
-					field="sno";
+					table = "tb_student";
+					field = "sno";
 					break;
 				default:
 					break;
 			}
-			String sql = "insert into tb_user (user,password,id) values (" + no+",\""+no+"\","+id + ")";
-			if (Query(sql)==1) {
-				sql = "insert into "+table+" ("+field+") values (" + no + ")";
-				if (Query(sql)==1) {
+			String sql = "insert into tb_user (user,password,id) values (" + no + ",\"" + no + "\"," + id + ")";
+			if (Query(sql) == 1) {
+				sql = "insert into " + table + " (" + field + ") values (" + no + ")";
+				if (Query(sql) == 1) {
 					return true;
 				}
 			}
-			
 		} catch (Exception e) {
-			
+			System.out.println(e.getMessage());
 		}
 		return false;
 	}
+	
 	public boolean inchange(int index, String targetdata, int key, int target) {
 		try {
 			String sql = "update ";
@@ -220,7 +247,7 @@ public class Condb {
 						default:
 							return false;
 					}
-					sql += "\"" + targetdata + "\" where tno=" + key;
+					sql += "'" + targetdata.replaceAll("'", "''") + "' where tno=" + key;
 					break;
 				case -2:
 					sql += "tb_student set ";
@@ -241,21 +268,20 @@ public class Condb {
 							sql += "studyday=";
 							break;
 						case 5:
-							ArrayList<String> list=new ArrayList<String>();
-							if(Query("select class,id from tb_class",list)&&list.size()>0){
+							ArrayList<String> list = new ArrayList<String>();
+							if (Query("select class,id from tb_class", list) && list.size() > 0) {
 								int i;
-								for(i=0;i<list.size();i++){
-									if(list.get(i).equals(targetdata)){
+								for (i = 0; i < list.size(); i++) {
+									if (list.get(i).equals(targetdata)) {
 										break;
 									}
-									
 								}
-								if(i!=list.size()){
-									targetdata=list.get(i+1);
-								}else{
+								if (i != list.size()) {
+									targetdata = list.get(i + 1);
+								} else {
 									return false;
 								}
-							}else{
+							} else {
 								return false;
 							}
 							sql += "sclass=";
@@ -269,12 +295,11 @@ public class Condb {
 						default:
 							return false;
 					}
-					if(targetdata.equals("")){
+					if (targetdata.equals("")) {
 						sql += "default where sno=" + key;
-					}else{
-						sql += "\"" + targetdata + "\" where sno=" + key;
+					} else {
+						sql += "'" + targetdata.replaceAll("'", "''") + "' where sno=" + key;
 					}
-					
 					break;
 				default:
 					return false;
@@ -287,6 +312,47 @@ public class Condb {
 		}
 		return false;
 	}
+
+	public boolean changesignpassword(String password, int no) {
+		try {
+			if (Query("update tb_user set password='" + password.replaceAll("'", "''") + "' where user=" + no) == 1) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+	
+	public String inquirypassword() {
+		try {
+			ArrayList<String> list = new ArrayList<String>();
+			if (Query("select id,user,password from tb_user", list)) {
+				int i = 0;
+				int columns = 3;
+				JSONObject json = new JSONObject();
+				JSONArray jsonMembers = new JSONArray();
+				JSONArray data = null;
+				json.put("code", "0");
+				for (String string : list) {
+					if (i % columns == 0) {
+						data = new JSONArray();
+					}
+					data.put(string);
+					i++;
+					if (i % columns == 0) {
+						jsonMembers.put(data);
+					}
+				}
+				json.put("data", jsonMembers);
+				return json.toString();
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
+	
 	public boolean delete(int no) {
 		try {
 			ArrayList<String> list = new ArrayList<String>();
@@ -312,10 +378,11 @@ public class Condb {
 		}
 		return false;
 	}
+	
 	public boolean cheakislogin(String cookie) {
 		try {
 			ArrayList<String> list = new ArrayList<String>(2);
-			if (Query("select a.user,id from tb_cookie as a,tb_user as b where a.user=b.user and cookie=\"" + cookie + "\"", list) && list.size() == 2) {
+			if (Query("select a.user,id from tb_cookie as a,tb_user as b where a.user=b.user and cookie='" + cookie.replaceAll("'", "''") + "'", list) && list.size() == 2) {
 				user = Integer.valueOf(list.get(0));
 				id = Integer.valueOf(list.get(1));
 				return true;
@@ -325,12 +392,15 @@ public class Condb {
 		}
 		return false;
 	}
+	
 	public int cookieid() {
 		return id;
 	}
+	
 	public int cookieuser() {
 		return user;
 	}
+	
 	private int Query(String sql) {
 		int change = -1;
 		try {
@@ -340,6 +410,7 @@ public class Condb {
 		}
 		return change;
 	}
+	
 	private boolean Query(String sql, ArrayList<String> list) {
 		try {
 			list.clear();
@@ -363,6 +434,7 @@ public class Condb {
 			return false;
 		}
 	}
+	
 	private String enMD5(String s) {
 		char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 		try {

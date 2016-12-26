@@ -2,6 +2,9 @@ window.onload = function a() {
 	$("#Sl").get(0).selectedIndex = window.localStorage.getItem("ID");
 	$(".account").val(window.localStorage.getItem("us"));
 	$(".password").val(window.localStorage.getItem("pw"));
+	if (!window.localStorage.getItem("us")==false) {
+		$(".c2_1").attr("checked",true);
+	}
 }
 $(".a2_2").click(function() {
 	var save = $(".c2_1").get(0).checked;

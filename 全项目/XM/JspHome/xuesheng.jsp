@@ -3,7 +3,7 @@
 <jsp:useBean id="db" class="db.Condb" scope="page"></jsp:useBean>
 <%
 Cookie cookies[]=request.getCookies();
-if (cookies!=null) {
+if(cookies!=null){
 	for(Cookie sCookie:cookies){
 		if(sCookie!=null){
 			if(("cookie").equals(sCookie.getName())){
@@ -73,10 +73,10 @@ if (cookies!=null) {
 		<div id="myTabContent" class="tab-content">
 			<div class="tab-pane fade in active" id="grxx">
 				<!--
-                	作者：1143910315@qq.com
-                	时间：2016-12-20
-                	描述：TODO 个人信息界面定义
-                -->
+					作者：林嘉豪
+					时间：2016-12-20
+					描述：TODO 个人信息界面定义
+				-->
 				<form class="form-horizontal" role="form">
 					<div class="form-group col-xs-12 col-sm-6">
 						<label class="col-xs-5 form-control-static text-right">学号：</label>
@@ -154,14 +154,12 @@ if (cookies!=null) {
 </html>
 <script src="js/allshare.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/xuesheng.js" type="text/javascript" charset="utf-8"></script><%
+					db.close();
 					return;
 				}
+				db.close();
 			}
 		}
 	}
 }
-%>
-<script>
-	alert("请先登录！");
-	window.location.href = "LoginFrom.jsp";
-</script>
+%><script>alert("请先登录！");window.location.href="LoginFrom.jsp";</script>

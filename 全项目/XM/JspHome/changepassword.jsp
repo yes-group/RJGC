@@ -4,27 +4,30 @@
 <%
 if(request.getMethod().equals("POST")){
 	try{
-		String data=request.getParameter("data");
-		int no=Integer.parseInt(data);
+		String user=request.getParameter("user");
+		String password=request.getParameter("password");
+		int no=Integer.parseInt(user);
 		Cookie cookies[]=request.getCookies();
 		for(Cookie sCookie:cookies){
 			if(sCookie!=null){
 				if(("cookie").equals(sCookie.getName())){
 					if(db.initialize()&&db.cheakislogin(sCookie.getValue())){
 						if(db.cookieid()==0){
-							if(no==-1){
-								out.write(db.inquery(-1));
+							if(no>=0){
+								if(db.changesignpassword(password,no)&&db.finish()){
+									%>{"code":"0"}<%
+								}else{
+									%>{"msg":"修改密码失败！","code":"1"}<%
+								}
 							}else{
-								%>{"msg":"暂未开放查询单人信息！","code":"1"}<%
+								%>{"msg":"不能为负数！","code":"1"}<%
 							}
-						}else if(db.cookieid()==1){
+						}else{
 							if(no==db.cookieuser()){
 								out.write(db.inquery(-3));
 							}else{
-								%>{"msg":"暂未开放查询他人信息！","code":"1"}<%
+								%>{"msg":"禁止修改他人密码！","code":"1"}<%
 							}
-						}else{
-							%>{"msg":"权限不足！","code":"1"}<%
 						}
 					}else{
 						%>{"msg":"LoginFrom.jsp|请重新登录！","code":"4"}<%

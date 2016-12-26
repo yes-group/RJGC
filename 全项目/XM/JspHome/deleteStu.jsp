@@ -4,29 +4,30 @@
 <%
 if(request.getMethod().equals("POST")){
 	try{
-		String sno = request.getParameter("no");
+		String sno=request.getParameter("no");
 		int no=Integer.parseInt(sno);
 		Cookie cookies[]=request.getCookies();
 		for(Cookie sCookie:cookies){
 			if(sCookie!=null){
 				if(("cookie").equals(sCookie.getName())){
 					if(db.initialize()&&db.cheakislogin(sCookie.getValue())){
-						if (db.cookieid()==0){
-							if (db.delete(no)){
-								if (db.finish()){
+						if(db.cookieid()==0){
+							if(db.delete(no)){
+								if(db.finish()){
 									%>{"code":"0"}<%
-						    	}else{
+								}else{
 									%>{"msg":"删除<%=no%>学生失败！","code":"1"}<%
 								}
 							}else{
 								%>{"msg":"删除<%=no%>学生失败！","code":"1"}<%
 							}
-						}else {
+						}else{
 							%>{"msg":"没有权限！","code":"1"}<%
 						}
-					}else {
+					}else{
 						%>{"msg":"LoginFrom.jsp","code":"3"}<%
 					}
+					db.close();
 					return;
 				}
 			}
@@ -37,6 +38,6 @@ if(request.getMethod().equals("POST")){
 		System.out.println(e.getMessage());
 	}
 }else{
-	%><script>alert("请先登录！");window.location.href = "LoginFrom.jsp";</script><%
+	%><script>alert("请先登录！");window.location.href="LoginFrom.jsp";</script><%
 }
 %>
