@@ -5,6 +5,7 @@
 if(request.getMethod().equals("POST")){
 	try{
 		String user=request.getParameter("user");
+		String originalpassword=request.getParameter("originalpassword");
 		String password=request.getParameter("password");
 		int no=Integer.parseInt(user);
 		Cookie cookies[]=request.getCookies();
@@ -24,7 +25,15 @@ if(request.getMethod().equals("POST")){
 							}
 						}else{
 							if(no==db.cookieuser()){
-								out.write(db.inquery(-3));
+								if(db.login(db.cookieuser(),originalpassword,db.cookieid())!=null){
+									if(db.changesignpassword(password,no)&&db.finish()){
+										%>{"msg":"LoginFrom.jsp","code":"2"}<%
+									}else{
+										%>{"msg":"修改密码失败！","code":"1"}<%
+									}
+								}else{
+									%>{"msg":"原密码错误！","code":"1"}<%
+								}
 							}else{
 								%>{"msg":"禁止修改他人密码！","code":"1"}<%
 							}

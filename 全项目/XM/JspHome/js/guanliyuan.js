@@ -1,10 +1,11 @@
 $(window).resize(function() {
 	tableresize();
 });
-
+nevershow=false;
 function tableresize() {
 	$(".colw").attr("width", Math.ceil($(".active .bk")[0].offsetWidth / 7) + "px");
 	$(".colwe").attr("width", Math.ceil($(".active .bk")[0].offsetWidth / 8) + "px");
+	$(".colwl").attr("width", Math.ceil($(".active .bk")[0].offsetWidth / 3) + "px");
 }
 tableresize();
 $(".js")[0].hdata = false; //初始没有数据
@@ -13,13 +14,13 @@ $(".js")[0].nextclick = true; //允许刷新数据
 $(".xs")[0].hdata = false; //初始没有数据
 $(".xs")[0].tdata = ""; //放置数据
 $(".xs")[0].nextclick = true; //允许刷新数据
-$(".refresh").click(function() {
+$(".jm .refresh").click(function() {
 	refesh($(".active"));
 });
 err = null;
 jdmax = 0;
 jdnow = 0;
-$(".change").click(function() {
+$(".jm .change").click(function() {
 	var chang = $(this);
 	var target = chang.parents(".xx");
 	var canw = target.find(".canw");
@@ -209,12 +210,16 @@ $(".daoh").click(function() {
 	$("." + $(this)[0].id).addClass("active");
 	tableresize();
 });
-$(".add").click(function() {
+$(".jm .add").click(function() {
 	var add = $(this);
 	var target = add.parents(".xx");
 	var no=target.find(".gh").val();
 	if(no>2147483647){
 		alert("不能超过2147483647！");
+		return;
+	}
+	if(no<0){
+		alert("不能小于0！");
 		return;
 	}
 	var targeturl="insertTea.jsp";
@@ -239,7 +244,7 @@ $(".add").click(function() {
 		dataType: "json"
 	});
 });
-$(".del").click(function() {
+$(".jm .del").click(function() {
 	var del = $(this);
 	var target = del.parents(".xx");
 	var no=target.find(".gh").val();
@@ -281,3 +286,162 @@ $("#logout").click(function() {
 		dataType: "json"
 	});
 });
+$(".xg .refresh").click(function() {
+	xgrefresh();
+});
+function xgrefresh () {
+	$.ajax({
+		type: "POST",
+		url: "inquirypassword.jsp",
+		success: function(data) {
+			if(msgcheak(data)) {
+				var len=data.data.length;
+				var indata=data.data;
+				$(".xg .dataview").empty();
+				for(var i=0;i<len;i++){
+					var tr = $("<tr></tr>");
+					for(var j=0;j<indata[i].length;j++){
+						var td = $("<td></td>");
+						var input=$('<input class="d' + i + 'd' + j + ' xxinput" readonly type="text" />');
+						if(j==2){
+							input=$('<input class="d' + i + 'd' + j + ' xxinput" type="text" />');
+							input.change(xgchange);
+							input.focus(xgfocus);
+						}else if(j==0){
+							switch (indata[i][j]){
+								case "0":
+									indata[i][j]="管理员";
+									break;
+								case "1":
+									indata[i][j]="教师";
+									break;
+								case "2":
+									indata[i][j]="学生";
+									break;
+								default:
+									indata[i][j]="未知";
+									break;
+							}
+						}
+						input.val(indata[i][j]);
+						td.append(input);
+						tr.append(td);
+					}
+					$(".xg .dataview").append(tr);
+				}
+			}
+		},
+		error: function(data) {
+			alert("获取信息失败！请稍后重试！");
+		},
+		dataType: "json"
+	});
+}
+function xgchange() {
+	var r=confirm("即将修改"+$(this).parents("tr").find("input").eq(1).val()+"的密码为："+$(this).val()+"\n是否确认？");
+	if(r==true){
+		$.ajax({
+			type: "POST",
+			url: "changepassword.jsp",
+			data: {
+				"user":$(this).parents("tr").find("input").eq(1).val(),
+				"password":$(this).val()
+			},
+			success: function(data) {
+				if (msgcheak(data)) {
+					xgrefresh();
+				}
+			},
+			error: function(data) {
+				alert("修改"+$(this).parents("tr").find("input").eq(1).val()+"的密码失败！");
+			},
+			dataType: "json"
+		});
+		
+	}else{
+		$(this).val(this.val);
+	}
+}
+function xgfocus () {
+	this.val=$(this).val();
+}
+$(".bj .refresh").click(function() {
+	bjrefresh();
+});
+$(".bj .add").click(function() {
+	$.ajax({
+		type: "POST",
+		url: "addclass.jsp",
+		data: {
+			"name":$(".bj .gh").val()
+		},
+		success: function(data) {
+			if (msgcheak(data)) {
+				bjrefresh();
+				alert("增加成功！");
+			}
+		},
+		error: function(data) {
+			alert("增加失败！");
+		},
+		dataType: "json"
+	});
+	
+});
+$(".bj .del").click(function() {
+	var r=true;
+	if (!nevershow) {
+		r=confirm("删除班级会同时删除学生。\n是否确认？");
+		nevershow=true;
+	}
+	if(r==true){
+		$.ajax({
+			type: "POST",
+			url: "deleteclass.jsp",
+			data: {
+				"name":$(".bj .gh").val()
+			},
+			success: function(data) {
+				if (msgcheak(data)) {
+					bjrefresh();
+					alert("删除成功！");
+				}
+			},
+			error: function(data) {
+				alert("删除失败！");
+			},
+			dataType: "json"
+		});
+	}
+});
+function bjrefresh() {
+	$.ajax({
+		type: "POST",
+		url: "inquiryclass.jsp",
+		success: function(data) {
+			if (msgcheak(data)) {
+				var times=0;
+				var tr;
+				$(".bj .dataview").empty();
+				for (var i in data.data) {
+					if (times++%3==0) {
+						tr=$("<tr></tr>");
+					}
+					var td = $("<td></td>");
+					td.append(data.data[i]);
+					tr.append(td);
+					if (times%3==0) {
+						$(".bj .dataview").append(tr);
+					}
+				}
+				if (times%3!=0) {
+					$(".bj .dataview").append(tr);
+				}
+			}
+		},
+		error: function(data) {
+			alert("获取信息失败！请稍后重试！");
+		},
+		dataType: "json"
+	});
+}

@@ -10,7 +10,7 @@ if(request.getMethod().equals("POST")){
 				if(("cookie").equals(sCookie.getName())){
 					if(db.initialize()&&db.cheakislogin(sCookie.getValue())){
 						if(db.cookieid()==0){
-							String str=db.inquirypassword();
+							String str=db.inquiryclass();
 							if(str!=null){
 								out.write(str);
 							}else {

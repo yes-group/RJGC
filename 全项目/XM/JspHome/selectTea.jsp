@@ -13,13 +13,23 @@ if(request.getMethod().equals("POST")){
 					if(db.initialize()&&db.cheakislogin(sCookie.getValue())){
 						if(db.cookieid()==0){
 							if(no==-1){
-								out.write(db.inquery(-1));
+								String str=db.inquery(-1);
+								if(str!=null){
+									out.write(str);
+								}else{
+									%>{"msg":"查询信息失败！","code":"1"}<%
+								}
 							}else{
 								%>{"msg":"暂未开放查询单人信息！","code":"1"}<%
 							}
 						}else if(db.cookieid()==1){
 							if(no==db.cookieuser()){
-								out.write(db.inquery(-3));
+								String str=db.inquery(-3);
+								if(str!=null){
+									out.write(str);
+								}else{
+									%>{"msg":"查询信息失败！","code":"1"}<%
+								}
 							}else{
 								%>{"msg":"暂未开放查询他人信息！","code":"1"}<%
 							}

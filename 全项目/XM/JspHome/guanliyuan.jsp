@@ -41,19 +41,19 @@ if(cookies!=null){
 			时间：2016-12-16
 			描述：TODO 教师信息界面
 		-->
-		<div class="xx js active">
+		<div class="xx js jm active">
 			<div class="bk">
 				<table width="100%" border="1" cellspacing="0" cellpadding="0">
 					<caption class="title">
 						教师信息表
 					</caption>
 					<colgroup>
-						<col class="colw" width="12%">
-						<col class="colw" width="12%">
-						<col class="colw" width="12%">
-						<col class="colw" width="12%">
-						<col class="colw" width="12%">
-						<col class="colw" width="12%">
+						<col class="colw" width="14%">
+						<col class="colw" width="14%">
+						<col class="colw" width="14%">
+						<col class="colw" width="14%">
+						<col class="colw" width="14%">
+						<col class="colw" width="14%">
 						<col>
 					</colgroup>
 					<tbody>
@@ -71,12 +71,12 @@ if(cookies!=null){
 				<div class="gundong">
 					<table width="100%" border="1" cellspacing="0" cellpadding="0">
 						<colgroup>
-							<col class="colw" width="12%">
-							<col class="colw" width="12%">
-							<col class="colw" width="12%">
-							<col class="colw" width="12%">
-							<col class="colw" width="12%">
-							<col class="colw" width="12%">
+							<col class="colw" width="14%">
+							<col class="colw" width="14%">
+							<col class="colw" width="14%">
+							<col class="colw" width="14%">
+							<col class="colw" width="14%">
+							<col class="colw" width="14%">
 							<col>
 						</colgroup>
 						<tbody class="dataview">
@@ -104,20 +104,20 @@ if(cookies!=null){
 			时间：2016-12-16
 			描述：TODO 学生信息界面
 		-->
-		<div class="xx xs">
+		<div class="xx xs jm">
 			<div class="bk">
 				<table width="100%" border="1" cellspacing="0" cellpadding="0">
 					<caption class="title">
 						学生信息表
 					</caption>
 					<colgroup>
-						<col class="colwe" width="100px">
-						<col class="colwe" width="100px">
-						<col class="colwe" width="100px">
-						<col class="colwe" width="100px">
-						<col class="colwe" width="100px">
-						<col class="colwe" width="100px">
-						<col class="colwe" width="100px">
+						<col class="colwe" width="12%">
+						<col class="colwe" width="12%">
+						<col class="colwe" width="12%">
+						<col class="colwe" width="12%">
+						<col class="colwe" width="12%">
+						<col class="colwe" width="12%">
+						<col class="colwe" width="12%">
 						<col>
 					</colgroup>
 					<tbody>
@@ -136,13 +136,13 @@ if(cookies!=null){
 				<div class="gundong">
 					<table width="100%" border="1" cellspacing="0" cellpadding="0">
 						<colgroup>
-							<col class="colwe" width="100px">
-							<col class="colwe" width="100px">
-							<col class="colwe" width="100px">
-							<col class="colwe" width="100px">
-							<col class="colwe" width="100px">
-							<col class="colwe" width="100px">
-							<col class="colwe" width="100px">
+							<col class="colwe" width="12%">
+							<col class="colwe" width="12%">
+							<col class="colwe" width="12%">
+							<col class="colwe" width="12%">
+							<col class="colwe" width="12%">
+							<col class="colwe" width="12%">
+							<col class="colwe" width="12%">
 							<col>
 						</colgroup>
 						<tbody class="dataview">
@@ -168,17 +168,53 @@ if(cookies!=null){
 		<!--
 			作者：林嘉豪
 			时间：2016-12-16
-			描述：TODO 密码修改
+			描述：TODO 班级信息管理
 		-->
-		<div class="xx js active">
+		<div class="xx bj">
 			<div class="bk">
 				<table width="100%" border="1" cellspacing="0" cellpadding="0">
 					<caption class="title">
-						教师信息表
+						班级信息表
+					</caption>
+					<tbody>
+					</tbody>
+				</table>
+				<div class="gundong">
+					<table width="100%" border="1" cellspacing="0" cellpadding="0">
+						<colgroup>
+							<col class="colwl" width="12%">
+							<col class="colwl" width="12%">
+							<col>
+						</colgroup>
+						<tbody class="dataview">
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div>
+				<button class="refresh">刷新</button>
+				<div class="fr">
+					<a>班级名称：</a>
+					<input type="text" class="gh" value="" />
+					<button class="add">增加</button>
+					<button class="del">删除</button>
+				</div>
+			</div>
+		</div>
+		<!--
+			作者：林嘉豪
+			时间：2016-12-16
+			描述：TODO 密码修改
+		-->
+		<div class="xx xg">
+			<div class="bk">
+				<table width="100%" border="1" cellspacing="0" cellpadding="0">
+					<caption class="title">
+						用户信息表
 					</caption>
 					<colgroup>
-						<col class="colw" width="12%">
-						<col class="colw" width="12%">
+						<col class="colwl" width="12%">
+						<col class="colwl" width="12%">
 						<col>
 					</colgroup>
 					<tbody>
@@ -192,8 +228,8 @@ if(cookies!=null){
 				<div class="gundong">
 					<table width="100%" border="1" cellspacing="0" cellpadding="0">
 						<colgroup>
-							<col class="colw" width="12%">
-							<col class="colw" width="12%">
+							<col class="colwl" width="12%">
+							<col class="colwl" width="12%">
 							<col>
 						</colgroup>
 						<tbody class="dataview">
@@ -203,17 +239,6 @@ if(cookies!=null){
 			</div>
 			<div>
 				<button class="refresh">刷新</button>
-				<button class="change">修改</button>
-				<div class="fr">
-					<a>工号：</a>
-					<input type="text" class="gh" value="" />
-					<button class="add">增加</button>
-					<button class="del">删除</button>
-				</div>
-			</div>
-			<div class="jdt">
-				<div class="jdty"></div>
-				<div class="jdtc"></div>
 			</div>
 		</div>
 	</body>

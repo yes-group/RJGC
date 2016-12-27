@@ -22,6 +22,9 @@ if(cookies!=null){
 		<script src="js/bootstrap-datetimepicker.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<style type="text/css">
+			*{
+				z-index: 5;
+			}
 			.bg {
 				position: fixed;
 				margin-left: 800px;
@@ -37,14 +40,25 @@ if(cookies!=null){
 				position: relative;
 				padding: 0;
 			}
+			.alert{
+				position: relative;
+			}
+			.dropdown.open{
+				z-index: 6;
+			}
+			.tab-pane{
+				position: relative;
+			}
 		</style>
 	</head>
 	<body>
-		<div class="col-sm-pull-1 col-lg-pull-0 col-lg-push-1 col-lg-12 bgleft">
+		<canvas id="animation" width="1000px" height="1000px" style=" left:0px;position: absolute;z-index: 2;"></canvas>
+		<div class="col-sm-pull-1 col-lg-pull-0 col-lg-push-1 col-lg-12 bgleft" style="z-index: 1;">
 			<img src="img/bgleft.jpg" class="col-sm-push-4 col-md-push-2 col-lg-push-0 col-lg-pull-1 col-lg-12" />
 		</div>
-		<a id="logout" class="pull-right">退出系统</a>
-		<div>
+		<div style="height: 100px;"></div>
+		<a id="logout" class="pull-right" style="position: relative;">退出系统</a>
+		<div style="position: relative;">
 			同学，<strong id="user"><%=db.cookieuser()%></strong>
 		</div>
 		<ul id="myTab" class="nav nav-tabs">
@@ -68,6 +82,9 @@ if(cookies!=null){
 			</li>
 			<li>
 				<a href="#kcxx" data-toggle="tab">课程查询</a>
+			</li>
+			<li>
+				<a href="#xgmm" data-toggle="tab">修改密码</a>
 			</li>
 		</ul>
 		<div id="myTabContent" class="tab-content">
@@ -144,6 +161,24 @@ if(cookies!=null){
 			<div class="tab-pane fade" id="ejb">
 				<p>暂未开放成绩查询</p>
 			</div>
+			<div class="tab-pane fade" id="xgmm">
+				<form class="form-horizontal" role="form">
+					<div class="form-group col-xs-12">
+						<label class="col-xs-12 form-control-static">原密码：</label>
+						<input id="original" type="password" class="form-control" placeholder="请输入原密码">
+					</div>
+					<div class="form-group col-xs-12">
+						<label class="col-xs-12 form-control-static">新密码：</label>
+						<input id="password" type="password" class="form-control" placeholder="请输入新密码">
+					</div>
+					<div class="form-group col-xs-12">
+						<label class="col-xs-12 form-control-static label-danger">如修改密码后无法登录，请联系管理员。</label>
+					</div>
+					<div class="form-group col-xs-12 text-center">
+						<button type="button" class="btn btn-default mmqr">确认修改</button>
+					</div>
+				</form>
+			</div>
 		</div>
 		<div class="clearfix"></div>
 		<div class="alert alert-info fristAlert clearfix fade in">
@@ -153,7 +188,8 @@ if(cookies!=null){
 	</body>
 </html>
 <script src="js/allshare.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/xuesheng.js" type="text/javascript" charset="utf-8"></script><%
+<script src="js/xuesheng.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/animation.js" type="text/javascript" charset="utf-8"></script><%
 					db.close();
 					return;
 				}

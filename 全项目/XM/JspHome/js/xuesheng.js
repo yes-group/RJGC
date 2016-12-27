@@ -262,3 +262,28 @@ $("#logout").click(function() {
 		dataType: "json"
 	});
 });
+$("#xgmm .mmqr").click(function() {
+	if ($("#password").val().length>20) {
+		msgalert(2,"密码长度太长，最多20个字符！");
+	}else{
+		msgalert(0,"正在修改密码");
+		$.ajax({
+			type: "POST",
+			url: "changepassword.jsp",
+			data: {
+				"user":$("#user").text(),
+				"originalpassword":$("#original").val(),
+				"password":$("#password").val()
+			},
+			success: function(data) {
+				if (msgcheak(data)==false) {
+					msgalert(2,"修改密码失败！");
+				}
+			},
+			error: function(data) {
+				msgalert(2,"修改密码失败！");
+			},
+			dataType: "json"
+		});
+	}
+});

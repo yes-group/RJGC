@@ -150,7 +150,7 @@ public class Condb {
 					break;
 				case -2:
 					columns = 8;
-					sql = "select sno,sname,sex,birthday,studyday,class,pface,origin from tb_student,tb_class where id=sclass";
+					sql = "select sno,sname,sex,birthday,studyday,sclass,pface,origin from tb_student";
 					break;
 				default:
 					if (id == 1) {
@@ -158,7 +158,7 @@ public class Condb {
 						sql = "select tno,tname,sex,birthday,workday,pface,origin from tb_teacher where tno=" + user;
 					} else {
 						columns = 8;
-						sql = "select sno,sname,sex,birthday,studyday,class,pface,origin from tb_student,tb_class where id=sclass and sno=" + user;
+						sql = "select sno,sname,sex,birthday,studyday,sclass,pface,origin from tb_student where sno=" + user;
 					}
 					break;
 			}
@@ -169,11 +169,24 @@ public class Condb {
 				JSONArray data = null;
 				json.put("code", "0");
 				for (String string : list) {
-					if (i % columns == 0) {
+					if (i++ % columns == 0) {
 						data = new JSONArray();
 					}
+					// 下列if语句用于处理sclass对应的班级不存在的情况
+					if (i % columns == 6 && columns == 8) {
+						try {
+							ArrayList<String> templist = new ArrayList<String>();
+							if (Query("select class from tb_class where id=" + string, templist) && templist.size() == 1) {
+								string = templist.get(0);
+							} else {
+								string = "";
+							}
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							string = "";
+						}
+					}
 					data.put(string);
-					i++;
 					if (i % columns == 0) {
 						jsonMembers.put(data);
 					}
@@ -208,6 +221,59 @@ public class Condb {
 				sql = "insert into " + table + " (" + field + ") values (" + no + ")";
 				if (Query(sql) == 1) {
 					return true;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+	
+	public boolean addclass(String classname) {
+		try {
+			if (Query("insert into tb_class (class) values ('" + classname.replaceAll("'", "''") + "')") == 1) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+	
+	public String inquiryclass() {
+		try {
+			ArrayList<String> list = new ArrayList<String>();
+			if (Query("select class from tb_class", list)) {
+				JSONObject json = new JSONObject();
+				JSONArray jsonMembers = new JSONArray();
+				json.put("code", "0");
+				for (String string : list) {
+					jsonMembers.put(string);
+				}
+				json.put("data", jsonMembers);
+				return json.toString();
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
+	
+	public boolean deleteclass(String classname) {
+		try {
+			boolean next = false;
+			ArrayList<String> list = new ArrayList<String>();
+			if (Query("select class,id from tb_class", list)) {
+				for (String string : list) {
+					if (next) {
+						if (Query("delete from tb_class where id=" + string) == 1 && Query("delete from tb_student where sclass=" + string) != -1) {
+							return true;
+						}
+						return false;
+					}
+					if (string.equals(classname)) {
+						next = true;
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -335,11 +401,10 @@ public class Condb {
 				JSONArray data = null;
 				json.put("code", "0");
 				for (String string : list) {
-					if (i % columns == 0) {
+					if (i++ % columns == 0) {
 						data = new JSONArray();
 					}
 					data.put(string);
-					i++;
 					if (i % columns == 0) {
 						jsonMembers.put(data);
 					}

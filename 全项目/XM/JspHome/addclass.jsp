@@ -4,20 +4,20 @@
 <%
 if(request.getMethod().equals("POST")){
 	try{
+		String name=request.getParameter("name");
 		Cookie cookies[]=request.getCookies();
 		for(Cookie sCookie:cookies){
 			if(sCookie!=null){
 				if(("cookie").equals(sCookie.getName())){
 					if(db.initialize()&&db.cheakislogin(sCookie.getValue())){
 						if(db.cookieid()==0){
-							String str=db.inquirypassword();
-							if(str!=null){
-								out.write(str);
-							}else {
-								%>{"msg":"查询失败！","code":"1"}<%
+							if(db.addclass(name)&&db.finish()){
+								%>{"code":"0"}<%
+							}else{
+								%>{"msg":"增加班级失败！","code":"1"}<%
 							}
 						}else{
-							%>{"msg":"没有权限！","code":"1"}<%
+							%>{"msg":"权限不足！","code":"1"}<%
 						}
 					}else{
 						%>{"msg":"LoginFrom.jsp|请重新登录！","code":"4"}<%
