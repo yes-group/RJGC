@@ -57,8 +57,8 @@ if(cookies!=null){
 			<img src="img/bgleft.jpg" class="col-sm-push-4 col-md-push-2 col-lg-push-0 col-lg-pull-1 col-lg-12" />
 		</div>
 		<div style="height: 100px;"></div>
-		<a id="logout" class="pull-right" style="position: relative;">退出系统</a>
 		<div style="position: relative;">
+			<a id="logout" class="pull-right" style="position: relative;">退出系统</a>
 			同学，<strong id="user"><%=db.cookieuser()%></strong>
 		</div>
 		<ul id="myTab" class="nav nav-tabs">
