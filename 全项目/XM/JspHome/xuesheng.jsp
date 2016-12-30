@@ -58,7 +58,7 @@ if(cookies!=null){
 		</div>
 		<div style="height: 100px;"></div>
 		<div style="position: relative;">
-			<a id="logout" class="pull-right" style="position: relative;">退出系统</a>
+			<a id="logout" class="pull-right" style="position: relative;" href="#">退出系统</a>
 			同学，<strong id="user"><%=db.cookieuser()%></strong>
 		</div>
 		<ul id="myTab" class="nav nav-tabs">

@@ -1,22 +1,4 @@
-setTimeout(a, 3000);
-var num=0;
-var picnum=2;
-var maxpicnum=5;
-function a() {
-    $(".img3_1").fadeToggle(1000);
-    setTimeout(b,1000);
-    setTimeout(a, 3000);
-}
-function b(){
-    $(".img3_1")[num].src="./img/head"+picnum+".jpg";
-    picnum++;
-    if((++num)==2){
-        num=0;
-    }
-    if(picnum>maxpicnum){
-        picnum=0;
-    }
-}
+
 $(".login").click(function(){
 for(var i=0;i<3;i++){
   if(  $(this)[0]  ==  $(".login")[i]  )
@@ -26,3 +8,14 @@ for(var i=0;i<3;i++){
   }
 }
 });
+
+$(document).ready(function(){
+  $('#div3').owlCarousel({
+    items:1,
+    loop:true,
+    autoplay:true,
+    margin:0,
+    autoplayTimeout:1500
+});
+});
+ 

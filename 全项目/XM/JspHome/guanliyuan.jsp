@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="db.Condb"%>
 <jsp:useBean id="db" class="db.Condb" scope="page"></jsp:useBean>
 <%
@@ -28,13 +28,12 @@ if(cookies!=null){
 			<div class="bianse"></div>
 		</div>
 		<div class="daohang">
-			<center id="js" class="daoh">教师信息查询与修改</center>
-			<center id="xs" class="daoh">学生信息查询与修改</center>
-			<center id="kc" class="daoh">课程信息查询与修改</center>
-			<center id="cj" class="daoh">成绩信息查询与修改</center>
-			<center id="ks" class="daoh">考试信息录入</center>
-			<center id="bj" class="daoh">班级信息管理</center>
-			<center id="xg" class="daoh">用户密码修改</center>
+			<center id="js" class="daoh"><a href="#">教师信息查询与修改</a></center>
+			<center id="xs" class="daoh"><a href="#">学生信息查询与修改</a></center>
+			<center id="kc" class="daoh"><a href="#">课程信息查询与修改</a></center>
+			<center id="ks" class="daoh"><a href="#">考试信息录入</a></center>
+			<center id="bj" class="daoh"><a href="#">班级信息管理</a></center>
+			<center id="xg" class="daoh"><a href="#">用户密码修改</a></center>			
 		</div>
 		<!--
 			作者：林嘉豪
@@ -241,6 +240,7 @@ if(cookies!=null){
 				<button class="refresh">刷新</button>
 			</div>
 		</div>
+	
 	</body>
 </html>
 <script type="text/javascript" src="js/allshare.js"></script>

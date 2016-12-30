@@ -22,7 +22,7 @@ if(request.getMethod().equals("POST")){
 							%>{"msg":"guanliyuan.jsp","code":"2"}<%
 							break;
 						case 1:
-							%>{"msg":"jiaoshi.html","code":"2"}<%
+							%>{"msg":"Teacher.jsp","code":"2"}<%
 							break;
 						case 2:
 							%>{"msg":"xuesheng.jsp","code":"2"}<%

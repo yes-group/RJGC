@@ -60,7 +60,8 @@ body {
 	border: 1px solid #000000;
 	height: 578px;
 }
-
+a:link {text-decoration:none;}
+a:hover{background-color: #008000;}
 .gundong {
 	top: -2px;
 	position: relative;
